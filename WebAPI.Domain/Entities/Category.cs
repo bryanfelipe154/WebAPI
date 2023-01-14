@@ -6,10 +6,22 @@ namespace WebAPI.Domain.Entities
     {
         public string Name { get; private set; }
 
+        public ICollection<Product>? Products { get; set; }
+
         public Category(string name)
         {
             Validade(name);
 
+            Name = name;
+        }
+
+        public Category(int id, string name)
+        {
+            DomainValidation.Check(id < 0, "Invalid Id value.");
+
+            Validade(name);
+
+            Id = id;
             Name = name;
         }
 
