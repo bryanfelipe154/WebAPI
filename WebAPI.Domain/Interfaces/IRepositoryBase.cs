@@ -4,7 +4,7 @@ namespace WebAPI.Domain.Interfaces
 {
     public interface IRepositoryBase<T> where T : class
     {
-        Task<T> GetByIdAsync(Func<T, bool> predicate);
+        Task<T?> GetByIdAsync(Expression<Func<T, bool>> predicate);
         Task<IEnumerable<T>> FindAllAsync();
         Task<T?> FindByIdAsync(int id);
         Task<T?> AddAsync(T obj);
