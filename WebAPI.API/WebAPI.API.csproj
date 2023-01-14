@@ -11,10 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\WebAPI.Infra.IoC\WebAPI.Infra.IoC.csproj" />
   </ItemGroup>
 
