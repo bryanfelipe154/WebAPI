@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using WebAPI.Application.Mapping;
 using WebAPI.Infra.Data.Context;
 
 namespace WebAPI.Infra.IoC
@@ -14,6 +15,8 @@ namespace WebAPI.Infra.IoC
                 var connectionString = configuration.GetConnectionString("DefaultConnection");
                 options.UseSqlServer(connectionString);
             });
+
+            services.AddAutoMapper(typeof(MappingConfig)); // AppDomain.CurrentDomain.GetAssemblies()
 
             return services;
         }
