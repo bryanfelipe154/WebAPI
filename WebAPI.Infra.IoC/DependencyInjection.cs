@@ -5,8 +5,10 @@ using Microsoft.Extensions.DependencyInjection;
 using WebAPI.Application.Interfaces;
 using WebAPI.Application.Mapping;
 using WebAPI.Application.Services;
+using WebAPI.Domain.Account;
 using WebAPI.Domain.Interfaces;
 using WebAPI.Infra.Data.Context;
+using WebAPI.Infra.Data.Identity;
 using WebAPI.Infra.Data.Repositories;
 
 namespace WebAPI.Infra.IoC
@@ -15,9 +17,15 @@ namespace WebAPI.Infra.IoC
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequiredLength = 3;
+            }).AddEntityFrameworkStores<ApplicationDbContext>()
+                                    .AddDefaultTokenProviders();
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
@@ -33,6 +41,8 @@ namespace WebAPI.Infra.IoC
 
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IProductService, ProductService>();
+
+            services.AddScoped<IAuthenticate, AuthenticateService>();
 
             return services;
         }

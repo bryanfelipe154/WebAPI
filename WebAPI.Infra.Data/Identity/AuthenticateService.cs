@@ -3,12 +3,12 @@ using WebAPI.Domain.Account;
 
 namespace WebAPI.Infra.Data.Identity
 {
-    public sealed class AutenticateService : IAuthenticate
+    public sealed class AuthenticateService : IAuthenticate
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
 
-        public AutenticateService(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public AuthenticateService(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
