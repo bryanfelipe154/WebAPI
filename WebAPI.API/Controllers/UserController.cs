@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.API.Models;
+using WebAPI.Application.Services;
 using WebAPI.Domain.Account;
 
 namespace WebAPI.API.Controllers
@@ -34,7 +35,6 @@ namespace WebAPI.API.Controllers
             }
         }
 
-        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult> Login([FromBody] LoginModel userInfo)
         {
@@ -42,7 +42,9 @@ namespace WebAPI.API.Controllers
 
             if (result)
             {
-                return Ok($"User {userInfo.Email} login successfully");
+                var token = TokenService.GenerateToken(userInfo.Email, _configuration);
+
+                return Ok(token);
             }
             else
             {
@@ -51,6 +53,7 @@ namespace WebAPI.API.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost("logout")]
         public async Task<ActionResult> LogOut()
         {
